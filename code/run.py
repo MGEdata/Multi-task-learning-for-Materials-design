@@ -78,7 +78,7 @@ def shuffle_generate_train_test(ratio=[0.8,0.2],comb=(0,1)):
         ]
         id_train, id_test = parts[0], parts[1]
         id_train, id_test = np.array(id_train), np.array(id_test)
-        if num_cols > comp_feat_numbs+1:
+        if num_cols > comp_feat_numbs:
             comp_train_df = df_comp[id_train,:comp_feat_numbs]
             process_train_df = df_comp[id_train,comp_feat_numbs:]
             prop_train_df = df_prop[id_train]
