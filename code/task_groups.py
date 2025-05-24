@@ -629,7 +629,10 @@ for comb in tqdm(all_combs):
                         weight_decay=weight_decay,
                         )
         param2all[str((weight, lr, train_bs, weight_decay, hidden))] = 0
-        train_mse,val_mse,task_predict_score,task_commons_train,predict_results_all,epoch2score,all_predicts,all_trues,predict_y = main(params,data_train,data_valid,data_test,data_all,num_layers,data_new)
+        try:
+            train_mse,val_mse,task_predict_score,task_commons_train,predict_results_all,epoch2score,all_predicts,all_trues,predict_y = main(params,data_train,data_valid,data_test,data_all,num_layers,data_new)
+        except ValueError as e:
+            continue
         creep_loss = []
         size_loss = []
         solvus_loss = []
