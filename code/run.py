@@ -51,9 +51,7 @@ class CustomDataset(Dataset):
 
 def shuffle_generate_train_test(ratio=[0.8,0.2],comb=(0,1)):
     comp_feat_numbs = 24
-    # feature_path = r"E:\Text_mining\Work3\code\multi_task_embeds\multi_task\no_embed_six\frame2_creep\files\features"
     feature_path = r".\comps"
-    # props_path = r"E:\Text_mining\Work3\code\multi_task_embeds\multi_task\no_embed_six\frame2_creep\files\props"
     props_path = r".\props"
     x_train_set, x_valid_set, x_test_set, y_train_set, y_valid_set, y_test_set = [], [], [], [], [], []
     x_train_process_set, x_valid_process_set, x_test_process_set = [],[],[]
@@ -70,7 +68,7 @@ def shuffle_generate_train_test(ratio=[0.8,0.2],comb=(0,1)):
         num_rows = df_comp.shape[0]
         num_cols = df_comp.shape[1]
         ids = list(range(num_rows))
-        random.seed(1)  # 4
+        random.seed(1) 
         random.shuffle(ids)
         parts = [
             ids[:int(len(ids) * ratio[0])],
@@ -115,18 +113,11 @@ def shuffle_generate_train_test(ratio=[0.8,0.2],comb=(0,1)):
 
 def get_true():
     import xlrd
-    # 读取.xlsx文件
     file_path = r"E:\Text_mining\Work3\code\multi_task_embeds\multi_task\no_embed_six\code\true_y\task_trues.xlsx"
     workbook = xlrd.open_workbook(file_path)
-    # 选择第一个工作表
     sheet = workbook.sheet_by_index(0)
-
-    # 读取第一行数据作为键
     keys = [sheet.cell_value(0, col) for col in range(sheet.ncols)]
-
-    # 初始化字典
     data_dict = {key: [] for key in keys}
-    # 从第二行开始，读取每列数据
     for col in range(sheet.ncols):
         for row in range(1, sheet.nrows):
             if sheet.cell_value(row, col)!="":
@@ -149,9 +140,6 @@ def scores(name='mse', predicts=list(), trues=list()):
 
 
 class GetData(Dataset):
-    """
-
-    """
     def __init__(self,mode='train',comb=(1,2)):
         self.mode = mode
         all_x, all_x_plus, all_y, x_train_set, x_test_set, y_train_set,  y_test_set, task_names, x_train_process_set, x_test_process_set = shuffle_generate_train_test(comb=comb) # id_train, id_valid, id_test,
@@ -177,7 +165,6 @@ class GetData(Dataset):
                 x = torch.tensor(np.array(x))
                 new_data = np.array([1300,24,1100,168])
                 re_x_plus = list(x_plus)
-                # 使用 numpy.any() 检查是否存在空列表
                 if list(re_x_plus):
                     new_plus = [new_data for _ in x_plus]
                     x_plus = np.array(new_plus)
